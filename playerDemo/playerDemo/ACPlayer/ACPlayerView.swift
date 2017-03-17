@@ -25,6 +25,7 @@ class ACPlayerView: UIView {
   private var videoUrl: URL!
 //  private var playerItem: AVPlayerItem!
   private var isAutoPlay = false
+  private var player: AVPlayer!
 
   init() {
     super.init(frame: CGRect.zero)
@@ -41,6 +42,7 @@ class ACPlayerView: UIView {
   func setPlayer(controlView: UIView? = nil, model: ACPlayerModel) {
     assert(model.fatherView != nil, "please set fatherView first!")
     self.playerModel = model
+    self.videoUrl = model.videoURL
   }
   
   func autoPlayVideo() {
@@ -48,14 +50,15 @@ class ACPlayerView: UIView {
     // 初始化playerItem
     let playerItem = AVPlayerItem(asset: urlAsset)
     // 每次都重新创建Player，替换replaceCurrentItemWithPlayerItem:，该方法阻塞线程
-    let player = AVPlayer(playerItem: playerItem)
+    player = AVPlayer(playerItem: playerItem)
     
     // 初始化playerLayer
     let playerLayer = AVPlayerLayer(player: player)
-    backgroundColor = UIColor.black
+    playerLayer.frame = UIScreen.main.bounds
+//    backgroundColor = UIColor.black
     // 此处为默认视频填充模式
     playerLayer.videoGravity = videoGravity
-    
+    layer.addSublayer(playerLayer)
     // 自动播放
     isAutoPlay = true
     
@@ -76,12 +79,12 @@ class ACPlayerView: UIView {
 //      [self.controlView zf_playerDownloadBtnState:YES];
 //    }
     // 开始播放
-    play()
+//    play()
 //    self.isPauseByUser = NO;
   }
   
-  private func play() {
-    
+  func play() {
+    player.play()
   }
   
 }

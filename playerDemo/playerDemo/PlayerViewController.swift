@@ -12,16 +12,27 @@ class PlayerViewController: UIViewController {
   
   private lazy var model: ACPlayerModel = {
     let m = ACPlayerModel()
+    m.videoURL = URL(string: "http://image1.yuanfenba.net/uploads/oss/video/20170317/1489741596853256.mp4")
     m.fatherView = self.view
     return m
   }()
+  private var playerView = ACPlayerView()
 
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    let playerView = ACPlayerView()
+    view.backgroundColor = UIColor.white
+//    let playerView = ACPlayerView()
+    playerView.frame = UIScreen.main.bounds
     playerView.setPlayer(model: model)
     playerView.delegate = self
+    playerView.autoPlayVideo()
+    view.addSubview(playerView)
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    playerView.play()
   }
 
 }
