@@ -10,23 +10,16 @@ import UIKit
 
 class PlayerViewController: UIViewController {
   
-  private lazy var model: ACPlayerModel = {
-    let m = ACPlayerModel()
-    m.videoURL = URL(string: "http://image1.yuanfenba.net/uploads/oss/video/20170317/1489741596853256.mp4")
-    m.fatherView = self.view
-    return m
-  }()
-  private var playerView = ACPlayerView()
+  private var playerView = ACPlayer()
 
   override func viewDidLoad() {
     super.viewDidLoad()
     
     view.backgroundColor = UIColor.white
-//    let playerView = ACPlayerView()
     playerView.frame = UIScreen.main.bounds
-    playerView.setPlayer(model: model)
     playerView.delegate = self
-    playerView.autoPlayVideo()
+    playerView.videoURL = .URLString("http://image1.yuanfenba.net/uploads/oss/video/20170317/1489741596853256.mp4")
+    playerView.autoPlay()
     view.addSubview(playerView)
   }
   
@@ -37,7 +30,7 @@ class PlayerViewController: UIViewController {
 
 }
 
-extension PlayerViewController: ACPlayerViewDelegate {
+extension PlayerViewController: ACPlayerDelegate {
   func playerViewBackButtonAction() {
     _ = navigationController?.popViewController(animated: true)
   }

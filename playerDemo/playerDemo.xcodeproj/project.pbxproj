@@ -7,17 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40DFEF541EBF62450000EFB3 /* ACPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40DFEF531EBF62450000EFB3 /* ACPlayer.swift */; };
 		430393D41E793AF10090B05F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430393D31E793AF10090B05F /* AppDelegate.swift */; };
 		430393D61E793AF10090B05F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430393D51E793AF10090B05F /* ViewController.swift */; };
 		430393D91E793AF10090B05F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 430393D71E793AF10090B05F /* Main.storyboard */; };
 		430393DB1E793AF10090B05F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 430393DA1E793AF10090B05F /* Assets.xcassets */; };
 		430393DE1E793AF10090B05F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 430393DC1E793AF10090B05F /* LaunchScreen.storyboard */; };
-		430393E71E7940AC0090B05F /* ACPlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430393E61E7940AC0090B05F /* ACPlayerModel.swift */; };
 		430393E91E7941E70090B05F /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430393E81E7941E70090B05F /* PlayerViewController.swift */; };
-		430393EB1E7943120090B05F /* ACPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430393EA1E7943120090B05F /* ACPlayerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		40DFEF531EBF62450000EFB3 /* ACPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACPlayer.swift; sourceTree = "<group>"; };
 		430393D01E793AF10090B05F /* playerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = playerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		430393D31E793AF10090B05F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		430393D51E793AF10090B05F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -25,9 +25,7 @@
 		430393DA1E793AF10090B05F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		430393DD1E793AF10090B05F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		430393DF1E793AF10090B05F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		430393E61E7940AC0090B05F /* ACPlayerModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACPlayerModel.swift; sourceTree = "<group>"; };
 		430393E81E7941E70090B05F /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
-		430393EA1E7943120090B05F /* ACPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACPlayerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,8 +73,7 @@
 		430393E51E7940960090B05F /* ACPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				430393EA1E7943120090B05F /* ACPlayerView.swift */,
-				430393E61E7940AC0090B05F /* ACPlayerModel.swift */,
+				40DFEF531EBF62450000EFB3 /* ACPlayer.swift */,
 			);
 			path = ACPlayer;
 			sourceTree = "<group>";
@@ -157,8 +154,7 @@
 				430393D61E793AF10090B05F /* ViewController.swift in Sources */,
 				430393E91E7941E70090B05F /* PlayerViewController.swift in Sources */,
 				430393D41E793AF10090B05F /* AppDelegate.swift in Sources */,
-				430393E71E7940AC0090B05F /* ACPlayerModel.swift in Sources */,
-				430393EB1E7943120090B05F /* ACPlayerView.swift in Sources */,
+				40DFEF541EBF62450000EFB3 /* ACPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
