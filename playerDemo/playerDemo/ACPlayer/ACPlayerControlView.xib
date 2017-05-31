@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ACPlayerControlView" customModule="playerDemo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TLb-7T-hQy">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="cCK-LX-qRv">
+                    <rect key="frame" x="98" y="627" width="184" height="31"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="5Ad-Vb-Ro4"/>
+                    </constraints>
+                    <color key="minimumTrackTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="maximumTrackTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </slider>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8rt-Te-sal">
+                    <rect key="frame" x="50" y="635" width="40" height="14.5"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="iaU-04-TqT"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IAs-Qr-3NG">
+                    <rect key="frame" x="325" y="617" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="DMd-3F-aXP"/>
+                        <constraint firstAttribute="height" constant="50" id="dDC-r0-Kbp"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sg1-Wb-h1R">
+                    <rect key="frame" x="285" y="635" width="40" height="14.5"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="ibp-bd-jJD"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iUR-lT-fEY">
+                    <rect key="frame" x="0.0" y="617" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="tla-k4-Ukn"/>
+                        <constraint firstAttribute="width" constant="50" id="u4g-MC-uQM"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                </button>
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="7KF-zX-LgF">
+                    <rect key="frame" x="100" y="641" width="180" height="2"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="2" id="6yf-kh-OuH"/>
+                    </constraints>
+                </progressView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="TLb-7T-hQy" secondAttribute="trailing" id="8mv-Jq-8HV"/>
+                <constraint firstItem="Sg1-Wb-h1R" firstAttribute="leading" secondItem="cCK-LX-qRv" secondAttribute="trailing" constant="5" id="94t-Ix-WQc"/>
+                <constraint firstAttribute="bottom" secondItem="IAs-Qr-3NG" secondAttribute="bottom" id="ADx-Gg-qr8"/>
+                <constraint firstItem="7KF-zX-LgF" firstAttribute="centerY" secondItem="cCK-LX-qRv" secondAttribute="centerY" id="ByV-Zr-4TD"/>
+                <constraint firstItem="Sg1-Wb-h1R" firstAttribute="centerY" secondItem="cCK-LX-qRv" secondAttribute="centerY" id="GPQ-hP-QhW"/>
+                <constraint firstItem="cCK-LX-qRv" firstAttribute="centerY" secondItem="8rt-Te-sal" secondAttribute="centerY" id="Gib-hm-jki"/>
+                <constraint firstItem="7KF-zX-LgF" firstAttribute="leading" secondItem="cCK-LX-qRv" secondAttribute="leading" id="HGA-jw-KcG"/>
+                <constraint firstItem="cCK-LX-qRv" firstAttribute="leading" secondItem="8rt-Te-sal" secondAttribute="trailing" constant="10" id="K2d-4z-Urm"/>
+                <constraint firstItem="7KF-zX-LgF" firstAttribute="trailing" secondItem="cCK-LX-qRv" secondAttribute="trailing" id="M3b-7B-zLa"/>
+                <constraint firstItem="TLb-7T-hQy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Md0-uT-UdK"/>
+                <constraint firstAttribute="trailing" secondItem="IAs-Qr-3NG" secondAttribute="trailing" id="RBF-f1-NW7"/>
+                <constraint firstItem="IAs-Qr-3NG" firstAttribute="leading" secondItem="Sg1-Wb-h1R" secondAttribute="trailing" id="YzW-fh-0tu"/>
+                <constraint firstItem="8rt-Te-sal" firstAttribute="leading" secondItem="iUR-lT-fEY" secondAttribute="trailing" id="fX7-MW-hwT"/>
+                <constraint firstAttribute="bottom" secondItem="TLb-7T-hQy" secondAttribute="bottom" id="fxf-hV-JdA"/>
+                <constraint firstItem="8rt-Te-sal" firstAttribute="centerY" secondItem="iUR-lT-fEY" secondAttribute="centerY" id="hBa-nt-fJV"/>
+                <constraint firstItem="iUR-lT-fEY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="mPG-0z-6n0"/>
+                <constraint firstAttribute="bottom" secondItem="iUR-lT-fEY" secondAttribute="bottom" id="nWg-tQ-MlD"/>
+                <constraint firstItem="TLb-7T-hQy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="r12-R8-CPo"/>
+            </constraints>
+            <connections>
+                <outlet property="progressSlider" destination="cCK-LX-qRv" id="sWS-rV-dHM"/>
+            </connections>
+        </view>
+    </objects>
+</document>

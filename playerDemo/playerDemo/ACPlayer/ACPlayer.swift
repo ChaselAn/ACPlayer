@@ -18,14 +18,14 @@ public protocol ACPlayerDelegate: NSObjectProtocol {
 
 open class ACPlayer: UIView {
   
-  public enum ACPlayerURLType {
+  public enum URLType {
     case none
     case asset(AVAsset)
     case URLString(String)
     case URL(URL)
   }
   
-  public enum ACPlayerPlaceholderImageType {
+  public enum PlaceholderImageType {
     case none
     case image(UIImage)
     case URLString(String)
@@ -33,18 +33,16 @@ open class ACPlayer: UIView {
   
   open weak var delegate: ACPlayerDelegate?
   // 视频资源URL
-  open var videoURL: ACPlayerURLType = .none
+  open var videoURL: URLType = .none
   // 视频标题
   open var title: String?
   // 视频封面占位图，默认是空
-  open var placeholderImage: ACPlayerPlaceholderImageType = .none
-  // 视频分辨率
-  open var resolutionDic: [String: String] = [:]
+  open var placeholderImage: PlaceholderImageType = .none
   // 视频填充模式
   open var videoGravity: String = AVLayerVideoGravityResizeAspect
+  // 控制层View
+  open var controlView: UIView? = nil
   
-  //  private var playerItem: AVPlayerItem!
-  private var isAutoPlay = false
   private var player: AVPlayer!
   
   init() {
@@ -60,7 +58,6 @@ open class ACPlayer: UIView {
   }
   
   func autoPlay() {
-    isAutoPlay = true
     setPlayer()
     player.play()
   }
