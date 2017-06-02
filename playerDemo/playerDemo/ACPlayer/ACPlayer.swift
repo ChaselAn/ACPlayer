@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import AVKit
+import SnapKit
 
 public protocol ACPlayerDelegate: NSObjectProtocol {
   
@@ -45,24 +46,33 @@ open class ACPlayer: UIView {
   
   private var player: AVPlayer!
   
-  init() {
+  public init(customControlView: UIView?) {
     super.init(frame: CGRect.zero)
+    self.controlView = customControlView
+    setUI()
   }
   
-  override init(frame: CGRect) {
+  public init() {
+    super.init(frame: CGRect.zero)
+    setUI()
+  }
+  
+  public override init(frame: CGRect) {
     super.init(frame: frame)
+    setUI()
   }
   
   required public init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
+    setUI()
   }
   
-  func autoPlay() {
+  open func autoPlay() {
     setPlayer()
     player.play()
   }
   
-  func play() {
+  open func play() {
     player.play()
   }
   
@@ -86,6 +96,16 @@ open class ACPlayer: UIView {
     playerLayer.frame = UIScreen.main.bounds
     playerLayer.videoGravity = videoGravity
     layer.addSublayer(playerLayer)
+  }
+  
+  private func setUI() {
+    if controlView == nil {
+      controlView = Bundle.main.loadNibNamed("ACPlayerControlView", owner: nil, options: nil)?.last as! ACPlayerControlView
+    }
+    addSubview(controlView!)
+    controlView?.snp.makeConstraints({ (make) in
+      make.edges.equalToSuperview()
+    })
   }
 }
 

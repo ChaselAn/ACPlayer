@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class PlayerViewController: UIViewController {
   
@@ -21,8 +22,14 @@ class PlayerViewController: UIViewController {
     playerView.videoURL = .URLString("http://image1.yuanfenba.net/uploads/oss/video/20170317/1489741596853256.mp4")
     playerView.autoPlay()
     view.addSubview(playerView)
+    
+    let controlView = Bundle.main.loadNibNamed("ACPlayerControlView", owner: nil, options: nil)?.last as! ACPlayerControlView
+    view.addSubview(controlView)
+    controlView.snp.makeConstraints({ (make) in
+      make.edges.equalToSuperview()
+    })
   }
-  
+
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     playerView.play()

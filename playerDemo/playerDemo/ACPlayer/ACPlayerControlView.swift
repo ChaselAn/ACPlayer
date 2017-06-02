@@ -60,7 +60,6 @@ class ACPlayerControlView: UIView {
     UIView.animate(withDuration: 0.25, animations: { 
       self.topView.alpha = alpha
       self.bottomView.alpha = alpha
-      
     }) { (_) in
       if isShow {
         self.autoHideControlView()
@@ -74,6 +73,6 @@ class ACPlayerControlView: UIView {
       self?.controlViewAnimate(false)
     })
     
-    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + TimeInterval(5), execute: hideWorkItem!)
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + TimeInterval(3), execute: hideWorkItem!)
   }
 }
