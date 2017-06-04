@@ -28,11 +28,22 @@ class PlayerViewController: UIViewController {
     super.viewDidAppear(animated)
     playerView.play()
   }
-
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    navigationController?.setNavigationBarHidden(true, animated: true)
+    UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: false)
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    navigationController?.setNavigationBarHidden(false, animated: true)
+    UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.default, animated: false)
+  }
 }
 
 extension PlayerViewController: ACPlayerDelegate {
-  func playerViewBackButtonAction() {
-    _ = navigationController?.popViewController(animated: true)
+  func backButtonDidClicked(in player: ACPlayer) {
+    navigationController?.popViewController(animated: true)
   }
 }

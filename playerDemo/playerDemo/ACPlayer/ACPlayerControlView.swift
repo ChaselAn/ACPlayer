@@ -14,8 +14,11 @@ class ACPlayerControlView: UIView {
   @IBOutlet weak var fastForwardView: UIView!
   @IBOutlet weak var bottomView: UIView!
   @IBOutlet weak var topView: UIView!
+  @IBOutlet weak var progressView: UIProgressView!
   
-  private var isShow = false
+  weak var handlePlayer: ACPlayer?
+  
+  private var isShow = true
   private var hideWorkItem: DispatchWorkItem?
   
   override func awakeFromNib() {
@@ -29,6 +32,8 @@ class ACPlayerControlView: UIView {
   }
   
   @IBAction func backBtnClicked(_ sender: UIButton) {
+    guard let handlePlayer = handlePlayer else { return }
+    handlePlayer.delegate?.backButtonDidClicked(in: handlePlayer)
   }
 
   @IBAction func playBtnClicked(_ sender: UIButton) {
@@ -53,9 +58,14 @@ class ACPlayerControlView: UIView {
     controlViewAnimate(!isShow)
   }
   
+  func setProgress(loadedDuration: TimeInterval , totalDuration: TimeInterval) {
+    progressView.setProgress(Float(loadedDuration) / Float(totalDuration), animated: true)
+  }
+  
   private func controlViewAnimate(_ isShow: Bool) {
     self.isShow = isShow
     let alpha: CGFloat = isShow ? 1 : 0
+    UIApplication.shared.setStatusBarHidden(!isShow, with: .fade)
     
     UIView.animate(withDuration: 0.25, animations: { 
       self.topView.alpha = alpha

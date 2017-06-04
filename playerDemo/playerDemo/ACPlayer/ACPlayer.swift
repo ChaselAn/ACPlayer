@@ -13,7 +13,7 @@ import SnapKit
 
 public protocol ACPlayerDelegate: NSObjectProtocol {
   
-  func playerViewBackButtonAction()
+  func backButtonDidClicked(in player: ACPlayer)
   
 }
 
@@ -42,16 +42,17 @@ open class ACPlayer: UIView {
   // 视频填充模式
   open var videoGravity: String = AVLayerVideoGravityResizeAspect
   // 控制层View
-  open var controlView: UIView? = nil
+  private var controlView: ACPlayerControlView = Bundle.main.loadNibNamed("ACPlayerControlView", owner: nil, options: nil)?.last as! ACPlayerControlView
   
+  private var playerItem: AVPlayerItem?
   private var player: AVPlayer!
   private var playerLayerView = UIView()
   
-  public init(customControlView: UIView?) {
-    super.init(frame: CGRect.zero)
-    self.controlView = customControlView
-    setUI()
-  }
+//  public init(customControlView: UIView?) {
+//    super.init(frame: CGRect.zero)
+//    self.controlView = customControlView
+//    setUI()
+//  }
   
   public init() {
     super.init(frame: CGRect.zero)
@@ -77,8 +78,14 @@ open class ACPlayer: UIView {
     player.play()
   }
   
+  enum PlayerObserverName {
+    static let status = "status"
+    static let loadedTimeRanges = "loadedTimeRanges"
+    static let playbackBufferEmpty = "playbackBufferEmpty"
+    static let playbackLikelyToKeepUp = "playbackLikelyToKeepUp"
+  }
+  
   private func setPlayer() {
-    var playerItem: AVPlayerItem? = nil
     switch videoURL {
     case .asset(let asset):
       playerItem = AVPlayerItem(asset: asset)
@@ -97,21 +104,63 @@ open class ACPlayer: UIView {
     playerLayer.frame = UIScreen.main.bounds
     playerLayer.videoGravity = videoGravity
     playerLayerView.layer.addSublayer(playerLayer)
+    
+    playerItem?.addObserver(self, forKeyPath: PlayerObserverName.status, options: NSKeyValueObservingOptions.new, context: nil)
+    playerItem?.addObserver(self, forKeyPath: PlayerObserverName.loadedTimeRanges, options: NSKeyValueObservingOptions.new, context: nil)
+    playerItem?.addObserver(self, forKeyPath: PlayerObserverName.playbackBufferEmpty, options: NSKeyValueObservingOptions.new, context: nil)
+    playerItem?.addObserver(self, forKeyPath: PlayerObserverName.playbackLikelyToKeepUp, options: NSKeyValueObservingOptions.new, context: nil)
+  }
+  
+  private func availableDuration() -> TimeInterval? {
+    if let loadedTimeRanges = player?.currentItem?.loadedTimeRanges, let first = loadedTimeRanges.first {
+      let timeRange = first.timeRangeValue
+      let startSeconds = CMTimeGetSeconds(timeRange.start)
+      let durationSecound = CMTimeGetSeconds(timeRange.duration)
+      let result = startSeconds + durationSecound
+      return result
+    }
+    return nil
   }
   
   private func setUI() {
     addSubview(playerLayerView)
-    if controlView == nil {
-      controlView = Bundle.main.loadNibNamed("ACPlayerControlView", owner: nil, options: nil)?.last as! ACPlayerControlView
-    }
-    addSubview(controlView!)
+//    if controlView == nil {
+//      let tempControlView =
+//      tempControlView.handlePlayer = self
+//      controlView = tempControlView
+//    }
+    controlView.handlePlayer = self
+    addSubview(controlView)
     
     playerLayerView.snp.makeConstraints { (make) in
       make.edges.equalToSuperview()
     }
-    controlView?.snp.makeConstraints({ (make) in
+    controlView.snp.makeConstraints({ (make) in
       make.edges.equalToSuperview()
     })
+  }
+  
+  open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    guard let item = object as? AVPlayerItem, let keyPath = keyPath else { return }
+    switch keyPath {
+    case PlayerObserverName.status:
+      break
+    case PlayerObserverName.loadedTimeRanges:
+      if let timeInterVarl = self.availableDuration() {
+        let duration = item.duration
+        let totalDuration = CMTimeGetSeconds(duration)
+        controlView.setProgress(loadedDuration: timeInterVarl, totalDuration: totalDuration)
+      }
+    default:
+      break
+    }
+  }
+  
+  deinit {
+    playerItem?.removeObserver(self, forKeyPath: PlayerObserverName.status)
+    playerItem?.removeObserver(self, forKeyPath: PlayerObserverName.loadedTimeRanges)
+    playerItem?.removeObserver(self, forKeyPath: PlayerObserverName.playbackBufferEmpty)
+    playerItem?.removeObserver(self, forKeyPath: PlayerObserverName.playbackLikelyToKeepUp)
   }
 }
 
