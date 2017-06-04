@@ -45,6 +45,7 @@ open class ACPlayer: UIView {
   open var controlView: UIView? = nil
   
   private var player: AVPlayer!
+  private var playerLayerView = UIView()
   
   public init(customControlView: UIView?) {
     super.init(frame: CGRect.zero)
@@ -95,14 +96,19 @@ open class ACPlayer: UIView {
     let playerLayer = AVPlayerLayer(player: player)
     playerLayer.frame = UIScreen.main.bounds
     playerLayer.videoGravity = videoGravity
-    layer.addSublayer(playerLayer)
+    playerLayerView.layer.addSublayer(playerLayer)
   }
   
   private func setUI() {
+    addSubview(playerLayerView)
     if controlView == nil {
       controlView = Bundle.main.loadNibNamed("ACPlayerControlView", owner: nil, options: nil)?.last as! ACPlayerControlView
     }
     addSubview(controlView!)
+    
+    playerLayerView.snp.makeConstraints { (make) in
+      make.edges.equalToSuperview()
+    }
     controlView?.snp.makeConstraints({ (make) in
       make.edges.equalToSuperview()
     })
