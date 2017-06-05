@@ -26,19 +26,24 @@ class PlayerViewController: UIViewController {
 
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    playerView.play()
+//    playerView.play()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     navigationController?.setNavigationBarHidden(true, animated: true)
     UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.lightContent, animated: false)
+    
   }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     navigationController?.setNavigationBarHidden(false, animated: true)
     UIApplication.shared.setStatusBarStyle(UIStatusBarStyle.default, animated: false)
+  }
+  
+  deinit {
+    print("PlayerViewController deinit")
   }
 }
 

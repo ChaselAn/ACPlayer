@@ -15,6 +15,8 @@ class ACPlayerControlView: UIView {
   @IBOutlet weak var bottomView: UIView!
   @IBOutlet weak var topView: UIView!
   @IBOutlet weak var progressView: UIProgressView!
+  @IBOutlet weak var currentTimeLabel: UILabel!
+  @IBOutlet weak var totalTimeLabel: UILabel!
   
   weak var handlePlayer: ACPlayer?
   
@@ -29,6 +31,7 @@ class ACPlayerControlView: UIView {
     progressSlider.setThumbImage(#imageLiteral(resourceName: "ACPlayer_slider_thumb"), for: .normal)
     fastForwardView.layer.cornerRadius = 4
     fastForwardView.layer.masksToBounds = true
+    autoHideControlView()
   }
   
   @IBAction func backBtnClicked(_ sender: UIButton) {
@@ -37,15 +40,33 @@ class ACPlayerControlView: UIView {
   }
 
   @IBAction func playBtnClicked(_ sender: UIButton) {
+    guard let handlePlayer = handlePlayer else { return }
+    switch handlePlayer.playerStatus {
+    case .playing:
+      handlePlayer.pause()
+      sender.isSelected = true
+    case .pause:
+      handlePlayer.play()
+      sender.isSelected = false
+    case .end:
+      handlePlayer.replay()
+      sender.isSelected = false
+    default:
+      break
+    }
+    autoHideControlView()
   }
   
   @IBAction func sliderTouchBegan(_ sender: UISlider) {
+    
   }
   
   @IBAction func sliderValueChanged(_ sender: UISlider) {
+    
   }
   
   @IBAction func sliderTouchEnded(_ sender: UISlider) {
+    autoHideControlView()
   }
   
   @IBAction func fullScreenBtnClicked(_ sender: UIButton) {
@@ -60,6 +81,12 @@ class ACPlayerControlView: UIView {
   
   func setProgress(loadedDuration: TimeInterval , totalDuration: TimeInterval) {
     progressView.setProgress(Float(loadedDuration) / Float(totalDuration), animated: true)
+  }
+  
+  func setTimeAndSlider(currentTime: TimeInterval, totalTime: TimeInterval) {
+    currentTimeLabel.text = ACPlayerTools.formatTimeIntervalToString(currentTime)
+    totalTimeLabel.text = ACPlayerTools.formatTimeIntervalToString(totalTime)
+    progressSlider.value = Float(currentTime) / Float(totalTime)
   }
   
   private func controlViewAnimate(_ isShow: Bool) {
@@ -84,5 +111,9 @@ class ACPlayerControlView: UIView {
     })
     
     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + TimeInterval(3), execute: hideWorkItem!)
+  }
+
+  deinit {
+    print("ACPlayerControlView deinit")
   }
 }

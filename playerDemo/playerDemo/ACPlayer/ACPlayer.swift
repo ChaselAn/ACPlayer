@@ -47,35 +47,50 @@ open class ACPlayer: UIView {
   private var playerItem: AVPlayerItem?
   private var player: AVPlayer!
   private var playerLayerView = UIView()
+  private var timer: Timer?
+  var playerStatus: PlayerStatus = .none
   
 //  public init(customControlView: UIView?) {
 //    super.init(frame: CGRect.zero)
 //    self.controlView = customControlView
-//    setUI()
+//    setupUI()
 //  }
   
   public init() {
     super.init(frame: CGRect.zero)
-    setUI()
+    setupUI()
   }
   
   public override init(frame: CGRect) {
     super.init(frame: frame)
-    setUI()
+    setupUI()
   }
   
   required public init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
-    setUI()
+    setupUI()
   }
   
   open func autoPlay() {
-    setPlayer()
-    player.play()
+    setupPlayer()
+    play()
   }
   
   open func play() {
+    if playerStatus == .error { return }
+    playerStatus = .playing
+    setupTimer()
     player.play()
+  }
+  
+  open func pause() {
+    playerStatus = .pause
+    player.pause()
+    timer?.fireDate = Date.distantFuture
+  }
+  
+  open func replay() {
+    
   }
   
   enum PlayerObserverName {
@@ -85,7 +100,15 @@ open class ACPlayer: UIView {
     static let playbackLikelyToKeepUp = "playbackLikelyToKeepUp"
   }
   
-  private func setPlayer() {
+  enum PlayerStatus {
+    case none
+    case playing
+    case pause
+    case end
+    case error
+  }
+  
+  private func setupPlayer() {
     switch videoURL {
     case .asset(let asset):
       playerItem = AVPlayerItem(asset: asset)
@@ -94,9 +117,11 @@ open class ACPlayer: UIView {
     case .URLString(let urlStr):
       if let url = URL(string: urlStr) {
         playerItem = AVPlayerItem(url: url)
+      } else {
+        playerStatus = .error
       }
     default:
-      break
+      playerStatus = .none
     }
     player = AVPlayer(playerItem: playerItem)
     
@@ -122,7 +147,7 @@ open class ACPlayer: UIView {
     return nil
   }
   
-  private func setUI() {
+  private func setupUI() {
     addSubview(playerLayerView)
 //    if controlView == nil {
 //      let tempControlView =
@@ -138,6 +163,22 @@ open class ACPlayer: UIView {
     controlView.snp.makeConstraints({ (make) in
       make.edges.equalToSuperview()
     })
+  }
+  
+  private func setupTimer() {
+    timer?.invalidate()
+    timer = Timer.ac_scheduledTimerWithTimeInterval(0.5, closure: { [weak self] in
+      self?.timerAction()
+    }, repeats: true)
+//    scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+    timer?.fireDate = Date()
+  }
+  
+  @objc private func timerAction() {
+    guard let playerItem = playerItem, playerItem.duration.timescale != 0 else { return }
+    let currentTime = CMTimeGetSeconds(player!.currentTime())
+    let totalTime   = TimeInterval(playerItem.duration.value) / TimeInterval(playerItem.duration.timescale)
+    controlView.setTimeAndSlider(currentTime: currentTime, totalTime: totalTime)
   }
   
   open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -161,6 +202,7 @@ open class ACPlayer: UIView {
     playerItem?.removeObserver(self, forKeyPath: PlayerObserverName.loadedTimeRanges)
     playerItem?.removeObserver(self, forKeyPath: PlayerObserverName.playbackBufferEmpty)
     playerItem?.removeObserver(self, forKeyPath: PlayerObserverName.playbackLikelyToKeepUp)
+    print("ACPlayer deinit")
   }
 }
 
