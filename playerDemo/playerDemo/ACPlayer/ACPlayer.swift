@@ -45,10 +45,12 @@ open class ACPlayer: UIView {
   private var controlView: ACPlayerControlView = Bundle.main.loadNibNamed("ACPlayerControlView", owner: nil, options: nil)?.last as! ACPlayerControlView
   
   private var playerItem: AVPlayerItem?
-  private var player: AVPlayer!
+  fileprivate var player: AVPlayer!
   private var playerLayerView = UIView()
-  private var timer: Timer?
-  var playerStatus: PlayerStatus = .none
+  fileprivate var timer: Timer?
+  fileprivate var playerStatus: PlayerStatus = .none
+  fileprivate var totalDuration: TimeInterval = 0
+  fileprivate var shouldSeekTo: TimeInterval = 0
   
 //  public init(customControlView: UIView?) {
 //    super.init(frame: CGRect.zero)
@@ -78,6 +80,7 @@ open class ACPlayer: UIView {
   
   open func play() {
     if playerStatus == .error { return }
+    controlView.playButton.isSelected = false
     playerStatus = .playing
     setupTimer()
     player.play()
@@ -149,12 +152,8 @@ open class ACPlayer: UIView {
   
   private func setupUI() {
     addSubview(playerLayerView)
-//    if controlView == nil {
-//      let tempControlView =
-//      tempControlView.handlePlayer = self
-//      controlView = tempControlView
-//    }
-    controlView.handlePlayer = self
+
+    controlView.delegate = self
     addSubview(controlView)
     
     playerLayerView.snp.makeConstraints { (make) in
@@ -165,12 +164,11 @@ open class ACPlayer: UIView {
     })
   }
   
-  private func setupTimer() {
+  fileprivate func setupTimer() {
     timer?.invalidate()
     timer = Timer.ac_scheduledTimerWithTimeInterval(0.5, closure: { [weak self] in
       self?.timerAction()
     }, repeats: true)
-//    scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
     timer?.fireDate = Date()
   }
   
@@ -191,7 +189,13 @@ open class ACPlayer: UIView {
         let duration = item.duration
         let totalDuration = CMTimeGetSeconds(duration)
         controlView.setProgress(loadedDuration: timeInterVarl, totalDuration: totalDuration)
+        self.totalDuration = totalDuration
+        controlView.totalDuration = totalDuration
       }
+    case PlayerObserverName.playbackBufferEmpty:
+      break
+    case PlayerObserverName.playbackLikelyToKeepUp:
+      break
     default:
       break
     }
@@ -206,3 +210,41 @@ open class ACPlayer: UIView {
   }
 }
 
+extension ACPlayer: ACPlayerControlViewDelegate {
+  func controlView(controlView: ACPlayerControlView, didClickedButton button: UIButton) {
+    guard let action = ACPlayerControlView.ButtonType(rawValue: button.tag) else { return }
+    switch action {
+    case .play:
+      button.isSelected ? pause() : play()
+    case .back:
+      delegate?.backButtonDidClicked(in: self)
+    default:
+      break
+    }
+  }
+  
+  func controlView(controlView: ACPlayerControlView, slider: UISlider, onSliderEvent event: UIControlEvents) {
+    switch event {
+    case UIControlEvents.touchDown:
+      if player?.currentItem?.status == AVPlayerItemStatus.readyToPlay {
+        timer?.fireDate = Date.distantFuture
+      }
+    case UIControlEvents.touchUpInside :
+      let seconds = totalDuration * Double(slider.value)
+      if seconds.isNaN {
+        return
+      }
+      setupTimer()
+      if self.player?.currentItem?.status == AVPlayerItemStatus.readyToPlay {
+        let draggedTime = CMTimeMake(Int64(seconds), 1)
+        player!.seek(to: draggedTime, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero, completionHandler: { (finished) in
+          self.play()
+        })
+      } else {
+        shouldSeekTo = seconds
+      }
+    default:
+      break
+    }
+  }
+}

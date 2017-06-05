@@ -19,7 +19,7 @@ class PlayerViewController: UIViewController {
     view.backgroundColor = UIColor.white
     playerView.frame = UIScreen.main.bounds
     playerView.delegate = self
-    playerView.videoURL = .URLString("http://image1.yuanfenba.net/uploads/oss/video/20170317/1489741596853256.mp4")
+    playerView.videoURL = .URLString("http://baobab.wdjcdn.com/1456117847747a_x264.mp4")
     playerView.autoPlay()
     view.addSubview(playerView)
   }

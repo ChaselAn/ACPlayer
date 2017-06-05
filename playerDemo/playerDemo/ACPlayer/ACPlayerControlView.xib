@@ -186,11 +186,16 @@
                 <constraint firstItem="iuF-xG-bVH" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="zr0-E0-B0Z"/>
             </constraints>
             <connections>
+                <outlet property="backButton" destination="MrN-Ff-VBu" id="4xz-mo-mPr"/>
                 <outlet property="bottomView" destination="iuF-xG-bVH" id="prG-yr-2EC"/>
                 <outlet property="currentTimeLabel" destination="8rt-Te-sal" id="sdB-2l-jKK"/>
                 <outlet property="fastForwardView" destination="Maj-3A-hrN" id="Msm-j0-sBv"/>
+                <outlet property="fullScreenButton" destination="iUR-lT-fEY" id="hKz-U4-Jc1"/>
+                <outlet property="fullScreenButtonWidthConst" destination="u4g-MC-uQM" id="4j2-rm-Bnq"/>
+                <outlet property="playButton" destination="IAs-Qr-3NG" id="ihE-s4-bW9"/>
                 <outlet property="progressSlider" destination="cCK-LX-qRv" id="sWS-rV-dHM"/>
                 <outlet property="progressView" destination="7KF-zX-LgF" id="gND-VI-wB0"/>
+                <outlet property="replayButton" destination="pbv-AQ-2mN" id="3IA-qr-WeC"/>
                 <outlet property="topView" destination="AGf-jb-ppx" id="Vbc-3h-hOf"/>
                 <outlet property="totalTimeLabel" destination="Sg1-Wb-h1R" id="A6w-We-sLQ"/>
             </connections>

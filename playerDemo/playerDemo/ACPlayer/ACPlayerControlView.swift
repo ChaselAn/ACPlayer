@@ -8,7 +8,22 @@
 
 import UIKit
 
+@objc protocol ACPlayerControlViewDelegate {
+
+  func controlView(controlView: ACPlayerControlView, didClickedButton button: UIButton)
+
+  func controlView(controlView: ACPlayerControlView, slider: UISlider, onSliderEvent event: UIControlEvents)
+  
+}
+
 class ACPlayerControlView: UIView {
+  
+  public enum ButtonType: Int {
+    case play       = 101
+    case back       = 102
+    case fullscreen = 103
+    case replay     = 104
+  }
 
   @IBOutlet weak var progressSlider: UISlider!
   @IBOutlet weak var fastForwardView: UIView!
@@ -18,7 +33,16 @@ class ACPlayerControlView: UIView {
   @IBOutlet weak var currentTimeLabel: UILabel!
   @IBOutlet weak var totalTimeLabel: UILabel!
   
-  weak var handlePlayer: ACPlayer?
+  @IBOutlet weak var playButton: UIButton!
+  @IBOutlet weak var backButton: UIButton!
+  @IBOutlet weak var fullScreenButton: UIButton!
+  @IBOutlet weak var replayButton: UIButton!
+  
+  @IBOutlet weak var fullScreenButtonWidthConst: NSLayoutConstraint!
+  
+//  weak var handlePlayer: ACPlayer?
+  weak var delegate: ACPlayerControlViewDelegate?
+  var totalDuration: TimeInterval = 0
   
   private var isShow = true
   private var hideWorkItem: DispatchWorkItem?
@@ -31,45 +55,44 @@ class ACPlayerControlView: UIView {
     progressSlider.setThumbImage(#imageLiteral(resourceName: "ACPlayer_slider_thumb"), for: .normal)
     fastForwardView.layer.cornerRadius = 4
     fastForwardView.layer.masksToBounds = true
+    
+    playButton.tag = ButtonType.play.rawValue
+    backButton.tag = ButtonType.back.rawValue
+    fullScreenButton.tag = ButtonType.fullscreen.rawValue
+    replayButton.tag = ButtonType.replay.rawValue
+    
+    fullScreenButtonWidthConst.constant = 0
+    
     autoHideControlView()
   }
   
   @IBAction func backBtnClicked(_ sender: UIButton) {
-    guard let handlePlayer = handlePlayer else { return }
-    handlePlayer.delegate?.backButtonDidClicked(in: handlePlayer)
+    delegate?.controlView(controlView: self, didClickedButton: sender)
   }
 
   @IBAction func playBtnClicked(_ sender: UIButton) {
-    guard let handlePlayer = handlePlayer else { return }
-    switch handlePlayer.playerStatus {
-    case .playing:
-      handlePlayer.pause()
-      sender.isSelected = true
-    case .pause:
-      handlePlayer.play()
-      sender.isSelected = false
-    case .end:
-      handlePlayer.replay()
-      sender.isSelected = false
-    default:
-      break
-    }
+    sender.isSelected = !sender.isSelected
+    delegate?.controlView(controlView: self, didClickedButton: sender)
     autoHideControlView()
   }
   
   @IBAction func sliderTouchBegan(_ sender: UISlider) {
-    
+    delegate?.controlView(controlView: self, slider: sender, onSliderEvent: .touchDown)
   }
   
   @IBAction func sliderValueChanged(_ sender: UISlider) {
-    
+    autoHideControlView()
+    let currentTime = Double(sender.value) * totalDuration
+    currentTimeLabel.text = ACPlayerTools.formatTimeIntervalToString(currentTime)
   }
   
   @IBAction func sliderTouchEnded(_ sender: UISlider) {
     autoHideControlView()
+    delegate?.controlView(controlView: self, slider: sender, onSliderEvent: .touchUpInside)
   }
   
   @IBAction func fullScreenBtnClicked(_ sender: UIButton) {
+    
   }
   
   @IBAction func replayBtnClicked(_ sender: UIButton) {
