@@ -40,7 +40,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="cCK-LX-qRv">
-                            <rect key="frame" x="98" y="10" width="184" height="31"/>
+                            <rect key="frame" x="98" y="10" width="179" height="31"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="5Ad-Vb-Ro4"/>
                             </constraints>
@@ -76,7 +76,7 @@
                             </connections>
                         </button>
                         <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7KF-zX-LgF">
-                            <rect key="frame" x="100" y="24" width="180" height="2"/>
+                            <rect key="frame" x="100" y="24" width="175" height="2"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="2" id="6yf-kh-OuH"/>
                             </constraints>
@@ -86,7 +86,7 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.1973994006849315" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="Sg1-Wb-h1R" firstAttribute="leading" secondItem="cCK-LX-qRv" secondAttribute="trailing" constant="5" id="8UZ-Xc-hDY"/>
+                        <constraint firstItem="Sg1-Wb-h1R" firstAttribute="leading" secondItem="cCK-LX-qRv" secondAttribute="trailing" constant="10" id="8UZ-Xc-hDY"/>
                         <constraint firstItem="7KF-zX-LgF" firstAttribute="leading" secondItem="cCK-LX-qRv" secondAttribute="leading" id="ArB-Gz-OKv"/>
                         <constraint firstItem="cCK-LX-qRv" firstAttribute="centerY" secondItem="iuF-xG-bVH" secondAttribute="centerY" id="Ced-hN-vlF"/>
                         <constraint firstItem="iUR-lT-fEY" firstAttribute="leading" secondItem="Sg1-Wb-h1R" secondAttribute="trailing" id="Mc7-RO-5UW"/>

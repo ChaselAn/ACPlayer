@@ -25,22 +25,21 @@ class ACPlayerControlView: UIView {
     case replay     = 104
   }
 
-  @IBOutlet weak var progressSlider: UISlider!
-  @IBOutlet weak var fastForwardView: UIView!
-  @IBOutlet weak var bottomView: UIView!
-  @IBOutlet weak var topView: UIView!
-  @IBOutlet weak var progressView: UIProgressView!
-  @IBOutlet weak var currentTimeLabel: UILabel!
-  @IBOutlet weak var totalTimeLabel: UILabel!
+  @IBOutlet private weak var progressSlider: UISlider!
+  @IBOutlet private weak var fastForwardView: UIView!
+  @IBOutlet private weak var bottomView: UIView!
+  @IBOutlet private weak var topView: UIView!
+  @IBOutlet private weak var progressView: UIProgressView!
+  @IBOutlet private weak var currentTimeLabel: UILabel!
+  @IBOutlet private weak var totalTimeLabel: UILabel!
   
   @IBOutlet weak var playButton: UIButton!
-  @IBOutlet weak var backButton: UIButton!
-  @IBOutlet weak var fullScreenButton: UIButton!
-  @IBOutlet weak var replayButton: UIButton!
+  @IBOutlet private weak var backButton: UIButton!
+  @IBOutlet private weak var fullScreenButton: UIButton!
+  @IBOutlet private weak var replayButton: UIButton!
   
-  @IBOutlet weak var fullScreenButtonWidthConst: NSLayoutConstraint!
+  @IBOutlet private weak var fullScreenButtonWidthConst: NSLayoutConstraint!
   
-//  weak var handlePlayer: ACPlayer?
   weak var delegate: ACPlayerControlViewDelegate?
   var totalDuration: TimeInterval = 0
   

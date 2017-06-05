@@ -80,7 +80,7 @@ open class ACPlayer: UIView {
   
   open func play() {
     if playerStatus == .error { return }
-    controlView.playButton.isSelected = false
+    controlView.playButton.isSelected = true
     playerStatus = .playing
     setupTimer()
     player.play()
@@ -177,6 +177,9 @@ open class ACPlayer: UIView {
     let currentTime = CMTimeGetSeconds(player!.currentTime())
     let totalTime   = TimeInterval(playerItem.duration.value) / TimeInterval(playerItem.duration.timescale)
     controlView.setTimeAndSlider(currentTime: currentTime, totalTime: totalTime)
+    if currentTime >= totalTime {
+      playerStatus = .end
+    }
   }
   
   open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -215,7 +218,7 @@ extension ACPlayer: ACPlayerControlViewDelegate {
     guard let action = ACPlayerControlView.ButtonType(rawValue: button.tag) else { return }
     switch action {
     case .play:
-      button.isSelected ? pause() : play()
+      button.isSelected ? play() : pause()
     case .back:
       delegate?.backButtonDidClicked(in: self)
     default:
