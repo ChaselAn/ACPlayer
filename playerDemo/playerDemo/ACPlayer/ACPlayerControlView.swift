@@ -24,6 +24,17 @@ class ACPlayerControlView: UIView {
     case fullscreen = 103
     case replay     = 104
   }
+  
+  weak var delegate: ACPlayerControlViewDelegate?
+  var totalDuration: TimeInterval = 0
+  /// 自动隐藏的时间，为0时不隐藏
+  var autoHideSecond: TimeInterval = 3
+  /// 是否显示全屏按钮
+  var isShowFullScreenButton = true {
+    didSet{
+      fullScreenButtonWidthConst.constant = isShowFullScreenButton ? 50 : 0
+    }
+  }
 
   @IBOutlet private weak var progressSlider: UISlider!
   @IBOutlet private weak var fastForwardView: UIView!
@@ -39,9 +50,6 @@ class ACPlayerControlView: UIView {
   @IBOutlet private weak var replayButton: UIButton!
   
   @IBOutlet private weak var fullScreenButtonWidthConst: NSLayoutConstraint!
-  
-  weak var delegate: ACPlayerControlViewDelegate?
-  var totalDuration: TimeInterval = 0
   
   private var isShow = true
   private var hideWorkItem: DispatchWorkItem?
@@ -59,8 +67,6 @@ class ACPlayerControlView: UIView {
     backButton.tag = ButtonType.back.rawValue
     fullScreenButton.tag = ButtonType.fullscreen.rawValue
     replayButton.tag = ButtonType.replay.rawValue
-    
-    fullScreenButtonWidthConst.constant = 0
     
     autoHideControlView()
   }
@@ -116,7 +122,7 @@ class ACPlayerControlView: UIView {
     let alpha: CGFloat = isShow ? 1 : 0
     UIApplication.shared.setStatusBarHidden(!isShow, with: .fade)
     
-    UIView.animate(withDuration: 0.25, animations: { 
+    UIView.animate(withDuration: 0.25, animations: {
       self.topView.alpha = alpha
       self.bottomView.alpha = alpha
     }) { (_) in
@@ -132,7 +138,7 @@ class ACPlayerControlView: UIView {
       self?.controlViewAnimate(false)
     })
     
-    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + TimeInterval(3), execute: hideWorkItem!)
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + autoHideSecond, execute: hideWorkItem!)
   }
 
   deinit {
