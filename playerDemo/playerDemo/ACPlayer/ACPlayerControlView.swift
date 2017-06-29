@@ -53,11 +53,12 @@ class ACPlayerControlView: UIView {
   
   private var isShow = true
   private var hideWorkItem: DispatchWorkItem?
+  private var tapGesture: UITapGestureRecognizer!
   
   override func awakeFromNib() {
     super.awakeFromNib()
     
-    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(touchBegan))
+    tapGesture = UITapGestureRecognizer(target: self, action: #selector(touchBegan))
     addGestureRecognizer(tapGesture)
     progressSlider.setThumbImage(#imageLiteral(resourceName: "ACPlayer_slider_thumb"), for: .normal)
     fastForwardView.layer.cornerRadius = 4
@@ -101,10 +102,22 @@ class ACPlayerControlView: UIView {
   }
   
   @IBAction func replayBtnClicked(_ sender: UIButton) {
+    delegate?.controlView(controlView: self, didClickedButton: sender)
+    autoHideControlView()
   }
   
-  @objc private func touchBegan() {
-    controlViewAnimate(!isShow)
+  func playEnd() {
+    hideWorkItem?.cancel()
+    topView.alpha = 1
+    bottomView.alpha = 0
+    replayButton.isHidden = false
+    tapGesture.isEnabled = false
+  }
+  
+  func replay() {
+    tapGesture.isEnabled = true
+    replayButton.isHidden = true
+    controlViewAnimate(true)
   }
   
   func setProgress(loadedDuration: TimeInterval , totalDuration: TimeInterval) {
@@ -115,6 +128,10 @@ class ACPlayerControlView: UIView {
     currentTimeLabel.text = ACPlayerTools.formatTimeIntervalToString(currentTime)
     totalTimeLabel.text = ACPlayerTools.formatTimeIntervalToString(totalTime)
     progressSlider.value = Float(currentTime) / Float(totalTime)
+  }
+  
+  @objc private func touchBegan() {
+    controlViewAnimate(!isShow)
   }
   
   private func controlViewAnimate(_ isShow: Bool) {

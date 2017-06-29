@@ -93,7 +93,10 @@ open class ACPlayer: UIView {
   }
   
   open func replay() {
-    
+    controlView.replay()
+    player.seek(to: CMTimeMake(Int64(0), 1)) { (finished) in
+      self.play()
+    }
   }
   
   enum PlayerObserverName {
@@ -133,10 +136,19 @@ open class ACPlayer: UIView {
     playerLayer.videoGravity = videoGravity
     playerLayerView.layer.addSublayer(playerLayer)
     
+    addObserver()
+  }
+  
+  private func addObserver() {
     playerItem?.addObserver(self, forKeyPath: PlayerObserverName.status, options: NSKeyValueObservingOptions.new, context: nil)
     playerItem?.addObserver(self, forKeyPath: PlayerObserverName.loadedTimeRanges, options: NSKeyValueObservingOptions.new, context: nil)
     playerItem?.addObserver(self, forKeyPath: PlayerObserverName.playbackBufferEmpty, options: NSKeyValueObservingOptions.new, context: nil)
     playerItem?.addObserver(self, forKeyPath: PlayerObserverName.playbackLikelyToKeepUp, options: NSKeyValueObservingOptions.new, context: nil)
+    if let _ = playerItem {
+      NotificationCenter.default.addObserver(self, selector: #selector(playEnd),
+                                             name: Notification.Name.AVPlayerItemDidPlayToEndTime,
+                                             object: nil)
+    }
   }
   
   private func availableDuration() -> TimeInterval? {
@@ -182,6 +194,11 @@ open class ACPlayer: UIView {
     }
   }
   
+  @objc private func playEnd() {
+    playerStatus = .end
+    controlView.playEnd()
+  }
+  
   open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
     guard let item = object as? AVPlayerItem, let keyPath = keyPath else { return }
     switch keyPath {
@@ -209,6 +226,7 @@ open class ACPlayer: UIView {
     playerItem?.removeObserver(self, forKeyPath: PlayerObserverName.loadedTimeRanges)
     playerItem?.removeObserver(self, forKeyPath: PlayerObserverName.playbackBufferEmpty)
     playerItem?.removeObserver(self, forKeyPath: PlayerObserverName.playbackLikelyToKeepUp)
+    NotificationCenter.default.removeObserver(self)
     print("ACPlayer deinit")
   }
 }
@@ -218,9 +236,15 @@ extension ACPlayer: ACPlayerControlViewDelegate {
     guard let action = ACPlayerControlView.ButtonType(rawValue: button.tag) else { return }
     switch action {
     case .play:
-      button.isSelected ? play() : pause()
+      if playerStatus == .end {
+        replay()
+      } else {
+        button.isSelected ? play() : pause()
+      }
     case .back:
       delegate?.backButtonDidClicked(in: self)
+    case .replay:
+      replay()
     default:
       break
     }
