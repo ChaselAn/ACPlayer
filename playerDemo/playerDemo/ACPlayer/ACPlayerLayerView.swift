@@ -11,6 +11,7 @@ import AVFoundation
 
 protocol ACPlayerLayerViewDelegate: NSObjectProtocol {
   func controlViewSetProgress(loadedDuration: TimeInterval, totalDuration: TimeInterval)
+  func playEnd()
 }
 class ACPlayerLayerView: UIView {
   
@@ -100,9 +101,6 @@ class ACPlayerLayerView: UIView {
       if let timeInterVarl = self.availableDuration() {
         let totalDuration = CMTimeGetSeconds(item.duration)
         delegate?.controlViewSetProgress(loadedDuration: timeInterVarl, totalDuration: totalDuration)
-//        handleView.controlView.setProgress(loadedDuration: timeInterVarl, totalDuration: totalDuration)
-//        handleView.totalDuration = totalDuration
-//        handleView.controlView.totalDuration = totalDuration
       }
     case PlayerObserverName.playbackBufferEmpty:
 //      handleView.controlView.showLoading()
@@ -116,8 +114,7 @@ class ACPlayerLayerView: UIView {
   }
   
   @objc private func playEnd() {
-//    playerStatus = .end
-//    handleView.controlView.playEnd()
+    delegate?.playEnd()
   }
   
   private func availableDuration() -> TimeInterval? {

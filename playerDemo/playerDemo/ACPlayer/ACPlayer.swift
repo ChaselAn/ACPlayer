@@ -149,28 +149,6 @@ open class ACPlayer: UIView {
     }
   }
   
-//  open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-//    guard let item = object as? AVPlayerItem, let keyPath = keyPath else { return }
-//    switch keyPath {
-//    case PlayerObserverName.status:
-//      break
-//    case PlayerObserverName.loadedTimeRanges:
-//      if let timeInterVarl = self.availableDuration() {
-//        let duration = item.duration
-//        let totalDuration = CMTimeGetSeconds(duration)
-//        controlView.setProgress(loadedDuration: timeInterVarl, totalDuration: totalDuration)
-//        self.totalDuration = totalDuration
-//        controlView.totalDuration = totalDuration
-//      }
-//    case PlayerObserverName.playbackBufferEmpty:
-//      controlView.showLoading()
-//    case PlayerObserverName.playbackLikelyToKeepUp:
-//      controlView.hideLoading()
-//    default:
-//      break
-//    }
-//  }
-  
 }
 
 extension ACPlayer: ACPlayerControlViewDelegate {
@@ -223,6 +201,11 @@ extension ACPlayer: ACPlayerLayerViewDelegate {
     controlView.setProgress(loadedDuration: loadedDuration, totalDuration: totalDuration)
     self.totalDuration = totalDuration
     controlView.totalDuration = totalDuration
+  }
+  
+  func playEnd() {
+    playerStatus = .end
+    controlView.playEnd()
   }
   
 }
