@@ -213,9 +213,9 @@ open class ACPlayer: UIView {
         controlView.totalDuration = totalDuration
       }
     case PlayerObserverName.playbackBufferEmpty:
-      break
+      controlView.showLoading()
     case PlayerObserverName.playbackLikelyToKeepUp:
-      break
+      controlView.hideLoading()
     default:
       break
     }
@@ -264,7 +264,7 @@ extension ACPlayer: ACPlayerControlViewDelegate {
       setupTimer()
       if self.player?.currentItem?.status == AVPlayerItemStatus.readyToPlay {
         let draggedTime = CMTimeMake(Int64(seconds), 1)
-        player!.seek(to: draggedTime, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero, completionHandler: { (finished) in
+        player!.seek(to: draggedTime, completionHandler: { (finished) in
           self.play()
         })
       } else {

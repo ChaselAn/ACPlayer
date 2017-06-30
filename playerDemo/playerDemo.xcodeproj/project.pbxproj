@@ -15,6 +15,7 @@
 		430393DE1E793AF10090B05F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 430393DC1E793AF10090B05F /* LaunchScreen.storyboard */; };
 		430393E91E7941E70090B05F /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430393E81E7941E70090B05F /* PlayerViewController.swift */; };
 		4314D52A1EE4F4ED006B0052 /* ACPlayerTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4314D5291EE4F4EC006B0052 /* ACPlayerTools.swift */; };
+		43B9BB481F05EE0C009F75B3 /* ACPlayerLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43B9BB471F05EE0C009F75B3 /* ACPlayerLoadingView.swift */; };
 		43D5CCD31EC947E00023A8F9 /* ACPlayerControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43D5CCD21EC947E00023A8F9 /* ACPlayerControlView.xib */; };
 		43D5CCD51EC94AAD0023A8F9 /* ACPlayerControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D5CCD41EC94AAD0023A8F9 /* ACPlayerControlView.swift */; };
 		848F1BBEA935E0B7201E6F56 /* Pods_playerDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC3A5491BB32DE89C029726A /* Pods_playerDemo.framework */; };
@@ -31,6 +32,7 @@
 		430393DF1E793AF10090B05F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		430393E81E7941E70090B05F /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		4314D5291EE4F4EC006B0052 /* ACPlayerTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACPlayerTools.swift; sourceTree = "<group>"; };
+		43B9BB471F05EE0C009F75B3 /* ACPlayerLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACPlayerLoadingView.swift; sourceTree = "<group>"; };
 		43D5CCD21EC947E00023A8F9 /* ACPlayerControlView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ACPlayerControlView.xib; sourceTree = "<group>"; };
 		43D5CCD41EC94AAD0023A8F9 /* ACPlayerControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACPlayerControlView.swift; sourceTree = "<group>"; };
 		63FD6DCD43BF6745DCB0FA96 /* Pods-playerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-playerDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-playerDemo/Pods-playerDemo.release.xcconfig"; sourceTree = "<group>"; };
@@ -87,9 +89,10 @@
 			isa = PBXGroup;
 			children = (
 				40DFEF531EBF62450000EFB3 /* ACPlayer.swift */,
-				4314D5291EE4F4EC006B0052 /* ACPlayerTools.swift */,
 				43D5CCD41EC94AAD0023A8F9 /* ACPlayerControlView.swift */,
 				43D5CCD21EC947E00023A8F9 /* ACPlayerControlView.xib */,
+				43B9BB471F05EE0C009F75B3 /* ACPlayerLoadingView.swift */,
+				4314D5291EE4F4EC006B0052 /* ACPlayerTools.swift */,
 			);
 			path = ACPlayer;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				430393D61E793AF10090B05F /* ViewController.swift in Sources */,
+				43B9BB481F05EE0C009F75B3 /* ACPlayerLoadingView.swift in Sources */,
 				43D5CCD51EC94AAD0023A8F9 /* ACPlayerControlView.swift in Sources */,
 				430393E91E7941E70090B05F /* PlayerViewController.swift in Sources */,
 				430393D41E793AF10090B05F /* AppDelegate.swift in Sources */,

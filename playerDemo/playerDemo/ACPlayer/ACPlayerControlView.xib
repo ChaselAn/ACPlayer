@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -171,12 +171,22 @@
                         <constraint firstItem="LOQ-EP-Ygb" firstAttribute="centerY" secondItem="MrN-Ff-VBu" secondAttribute="centerY" id="yyP-qg-ury"/>
                     </constraints>
                 </view>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fcv-iw-mOa" customClass="ACPlayerLoadingView" customModule="playerDemo" customModuleProvider="target">
+                    <rect key="frame" x="172.5" y="318.5" width="30" height="30"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="J9S-jF-cnt"/>
+                        <constraint firstAttribute="height" constant="30" id="c08-Pk-W2A"/>
+                    </constraints>
+                </view>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.10306078767123288" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="iuF-xG-bVH" secondAttribute="bottom" id="7es-YR-3xw"/>
                 <constraint firstItem="pbv-AQ-2mN" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="CN1-Tx-KQS"/>
                 <constraint firstAttribute="trailing" secondItem="iuF-xG-bVH" secondAttribute="trailing" id="DPa-46-Svr"/>
+                <constraint firstItem="fcv-iw-mOa" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Om5-MF-HwX"/>
+                <constraint firstItem="fcv-iw-mOa" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="WAd-03-DGU"/>
                 <constraint firstAttribute="trailing" secondItem="AGf-jb-ppx" secondAttribute="trailing" id="c1D-4c-q9d"/>
                 <constraint firstItem="Maj-3A-hrN" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="eZ6-QL-LzN"/>
                 <constraint firstItem="AGf-jb-ppx" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ky2-ag-pmE"/>
@@ -192,6 +202,7 @@
                 <outlet property="fastForwardView" destination="Maj-3A-hrN" id="Msm-j0-sBv"/>
                 <outlet property="fullScreenButton" destination="iUR-lT-fEY" id="hKz-U4-Jc1"/>
                 <outlet property="fullScreenButtonWidthConst" destination="u4g-MC-uQM" id="4j2-rm-Bnq"/>
+                <outlet property="loadingView" destination="fcv-iw-mOa" id="raL-OD-NrV"/>
                 <outlet property="playButton" destination="IAs-Qr-3NG" id="ihE-s4-bW9"/>
                 <outlet property="progressSlider" destination="cCK-LX-qRv" id="sWS-rV-dHM"/>
                 <outlet property="progressView" destination="7KF-zX-LgF" id="gND-VI-wB0"/>

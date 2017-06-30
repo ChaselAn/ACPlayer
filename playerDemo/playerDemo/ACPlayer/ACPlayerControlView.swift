@@ -48,6 +48,7 @@ class ACPlayerControlView: UIView {
   @IBOutlet private weak var backButton: UIButton!
   @IBOutlet private weak var fullScreenButton: UIButton!
   @IBOutlet private weak var replayButton: UIButton!
+  @IBOutlet private weak var loadingView: ACPlayerLoadingView!
   
   @IBOutlet private weak var fullScreenButtonWidthConst: NSLayoutConstraint!
   
@@ -120,7 +121,7 @@ class ACPlayerControlView: UIView {
     controlViewAnimate(true)
   }
   
-  func setProgress(loadedDuration: TimeInterval , totalDuration: TimeInterval) {
+  func setProgress(loadedDuration: TimeInterval, totalDuration: TimeInterval) {
     progressView.setProgress(Float(loadedDuration) / Float(totalDuration), animated: true)
   }
   
@@ -128,6 +129,14 @@ class ACPlayerControlView: UIView {
     currentTimeLabel.text = ACPlayerTools.formatTimeIntervalToString(currentTime)
     totalTimeLabel.text = ACPlayerTools.formatTimeIntervalToString(totalTime)
     progressSlider.value = Float(currentTime) / Float(totalTime)
+  }
+  
+  func showLoading() {
+    loadingView.startAnimating()
+  }
+  
+  func hideLoading() {
+    loadingView.stopAnimating()
   }
   
   @objc private func touchBegan() {
