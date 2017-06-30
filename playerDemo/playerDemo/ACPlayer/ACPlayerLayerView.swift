@@ -42,7 +42,7 @@ class ACPlayerLayerView: UIView {
   }
   
   func seek(to second: Int, completionHandler: @escaping (Bool)->()) {
-    player?.seek(to: CMTime(value: CMTimeValue(second), timescale: 1), completionHandler: completionHandler)
+    player?.seek(to: CMTimeMake(CMTimeValue(second), 1), toleranceBefore: CMTimeMake(1, 1), toleranceAfter: CMTimeMake(1, 1), completionHandler: completionHandler)
   }
   
   func setupPlayer(resourceType: ACPlayer.ResourceType) {
