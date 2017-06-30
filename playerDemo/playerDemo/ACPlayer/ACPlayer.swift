@@ -49,9 +49,8 @@ open class ACPlayer: UIView {
 //  private var playerItem: AVPlayerItem?
 //  fileprivate var player: AVPlayer!
   
-  var controlView: ACPlayerControlView = Bundle.main.loadNibNamed("ACPlayerControlView", owner: nil, options: nil)?.last as! ACPlayerControlView
-  var totalDuration: TimeInterval = 0
-  
+  fileprivate var controlView: ACPlayerControlView = Bundle.main.loadNibNamed("ACPlayerControlView", owner: nil, options: nil)?.last as! ACPlayerControlView
+  fileprivate var totalDuration: TimeInterval = 0
   fileprivate var playerLayerView: ACPlayerLayerView!
   fileprivate var timer: Timer?
   fileprivate var playerStatus: PlayerStatus = .none
@@ -115,6 +114,7 @@ open class ACPlayer: UIView {
   
   private func setupPlayerLayer() {
     playerLayerView = ACPlayerLayerView(resourceType: videoResource)
+    playerLayerView.delegate = self
   }
   
   private func setupUI() {
@@ -215,4 +215,14 @@ extension ACPlayer: ACPlayerControlViewDelegate {
       break
     }
   }
+}
+
+extension ACPlayer: ACPlayerLayerViewDelegate {
+  
+  func controlViewSetProgress(loadedDuration: TimeInterval, totalDuration: TimeInterval) {
+    controlView.setProgress(loadedDuration: loadedDuration, totalDuration: totalDuration)
+    self.totalDuration = totalDuration
+    controlView.totalDuration = totalDuration
+  }
+  
 }

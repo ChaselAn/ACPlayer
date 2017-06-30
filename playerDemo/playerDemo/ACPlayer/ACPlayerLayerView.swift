@@ -9,6 +9,9 @@
 import UIKit
 import AVFoundation
 
+protocol ACPlayerLayerViewDelegate: NSObjectProtocol {
+  func controlViewSetProgress(loadedDuration: TimeInterval, totalDuration: TimeInterval)
+}
 class ACPlayerLayerView: UIView {
   
   enum PlayerObserverName {
@@ -24,7 +27,7 @@ class ACPlayerLayerView: UIView {
     }
   }
   
-  weak var handleView: ACPlayer!
+  weak var delegate: ACPlayerLayerViewDelegate?
   
   private var resourceType: ACPlayer.ResourceType
   private(set) var playerItem: AVPlayerItem?
@@ -97,16 +100,18 @@ class ACPlayerLayerView: UIView {
       break
     case PlayerObserverName.loadedTimeRanges:
       if let timeInterVarl = self.availableDuration() {
-        let duration = item.duration
-        let totalDuration = CMTimeGetSeconds(duration)
-        handleView.controlView.setProgress(loadedDuration: timeInterVarl, totalDuration: totalDuration)
-        handleView.totalDuration = totalDuration
-        handleView.controlView.totalDuration = totalDuration
+        let totalDuration = CMTimeGetSeconds(item.duration)
+        delegate?.controlViewSetProgress(loadedDuration: timeInterVarl, totalDuration: totalDuration)
+//        handleView.controlView.setProgress(loadedDuration: timeInterVarl, totalDuration: totalDuration)
+//        handleView.totalDuration = totalDuration
+//        handleView.controlView.totalDuration = totalDuration
       }
     case PlayerObserverName.playbackBufferEmpty:
-      handleView.controlView.showLoading()
+//      handleView.controlView.showLoading()
+      break
     case PlayerObserverName.playbackLikelyToKeepUp:
-      handleView.controlView.hideLoading()
+//      handleView.controlView.hideLoading()
+      break
     default:
       break
     }
@@ -114,7 +119,7 @@ class ACPlayerLayerView: UIView {
   
   @objc private func playEnd() {
 //    playerStatus = .end
-    handleView.controlView.playEnd()
+//    handleView.controlView.playEnd()
   }
   
   private func availableDuration() -> TimeInterval? {
