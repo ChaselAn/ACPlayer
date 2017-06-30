@@ -20,7 +20,7 @@ class PlayerViewController: UIViewController {
     playerView.frame = UIScreen.main.bounds
     playerView.delegate = self
     playerView.videoResource = .URLString("http://baobab.wdjcdn.com/1456117847747a_x264.mp4")
-//    playerView.autoPlay()
+    playerView.play()
     view.addSubview(playerView)
   }
 

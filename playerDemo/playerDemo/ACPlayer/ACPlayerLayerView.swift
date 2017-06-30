@@ -29,25 +29,23 @@ class ACPlayerLayerView: UIView {
   
   weak var delegate: ACPlayerLayerViewDelegate?
   
-  private var resourceType: ACPlayer.ResourceType
   private(set) var playerItem: AVPlayerItem?
   private(set) var player: AVPlayer?
   private var playerLayer: AVPlayerLayer!
 
-  init(resourceType: ACPlayer.ResourceType) {
-    self.resourceType = resourceType
-    super.init(frame: CGRect.zero)
+  func play() {
+    player?.play()
   }
   
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+  func pause() {
+    player?.pause()
   }
   
   func seek(to second: Int, completionHandler: @escaping (Bool)->()) {
     player?.seek(to: CMTime(value: CMTimeValue(second), timescale: 1), completionHandler: completionHandler)
   }
   
-  private func setupPlayer() {
+  func setupPlayer(resourceType: ACPlayer.ResourceType) {
     switch resourceType {
     case .asset(let asset):
       playerItem = AVPlayerItem(asset: asset)

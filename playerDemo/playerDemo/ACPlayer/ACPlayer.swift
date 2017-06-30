@@ -51,7 +51,7 @@ open class ACPlayer: UIView {
   
   fileprivate var controlView: ACPlayerControlView = Bundle.main.loadNibNamed("ACPlayerControlView", owner: nil, options: nil)?.last as! ACPlayerControlView
   fileprivate var totalDuration: TimeInterval = 0
-  fileprivate var playerLayerView: ACPlayerLayerView!
+  fileprivate var playerLayerView = ACPlayerLayerView()
   fileprivate var timer: Timer?
   fileprivate var playerStatus: PlayerStatus = .none
   fileprivate var shouldSeekTo: TimeInterval = 0
@@ -88,12 +88,12 @@ open class ACPlayer: UIView {
     controlView.playButton.isSelected = true
     playerStatus = .playing
     setupTimer()
-//    player.play()
+    playerLayerView.play()
   }
   
   open func pause() {
     playerStatus = .pause
-//    player.pause()
+    playerLayerView.pause()
     timer?.fireDate = Date.distantFuture
   }
   
@@ -113,11 +113,11 @@ open class ACPlayer: UIView {
   }
   
   private func setupPlayerLayer() {
-    playerLayerView = ACPlayerLayerView(resourceType: videoResource)
-    playerLayerView.delegate = self
+    playerLayerView.setupPlayer(resourceType: videoResource)
   }
   
   private func setupUI() {
+    playerLayerView.delegate = self
     addSubview(playerLayerView)
 
     controlView.delegate = self
