@@ -55,12 +55,9 @@ class ACPlayerLayerView: UIView {
     case .URLString(let urlStr):
       if let url = URL(string: urlStr) {
         playerItem = AVPlayerItem(url: url)
-      } else {
-//        playerStatus = .error
       }
     default:
       break
-//      playerStatus = .none
     }
     player = AVPlayer(playerItem: playerItem)
     
